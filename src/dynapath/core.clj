@@ -25,9 +25,9 @@
   (and (satisfies? DynamicClasspath cl)
        (can-read? cl)))
 
-(def base-readable-addable-classpath
-  "A map that provides implementations of can-read? and can-add? that return true.
-Useful as a base for a DynamicClasspath implementation."
+(def ^{:doc "A map that provides implementations of can-read? and can-add? that return true.
+Useful as a base for a DynamicClasspath implementation."}
+  base-readable-addable-classpath
   {:can-add? (constantly true)
    :can-read? (constantly true)})
 
