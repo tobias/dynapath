@@ -5,28 +5,29 @@ make their effective classpaths readable and/or modifiable.
 
 ## Rationale 
 
-Clojure uses a `clojure.lang.DynamicClassLoader` by default (an extension 
-of `java.net.URLClassLoader`), which provides `.getURLs` for reading the
-effective classpath and `.addURL` for modifying it. It's common for projects 
-that need to read or modify the effective classpath to assume that a 
-`URLClassLoader` is always available. But in some environments, the available
-class loader may not be a `URLClassLoader`, and may not be readable or 
-modifiable.
+Clojure uses a `clojure.lang.DynamicClassLoader` by default (an
+extension of `java.net.URLClassLoader`), which provides `.getURLs` for
+reading the effective classpath and `.addURL` for modifying it. It's
+common for projects that need to read or modify the effective
+classpath to assume that a `URLClassLoader` is always available. But
+in some environments, the available class loader may not be a
+`URLClassLoader`, and may not be readable or modifiable.
 
-Some projects (notably `pomegranate`) handle this by providing a 
-protocol that can be implemented for other class loaders that may provide
-similar functionality.
+Some projects (notably `pomegranate`) handle this by providing a
+protocol that can be implemented for other class loaders that may
+provide similar functionality.
 
-dynapath provides a protocol that is based on an extraction of pomegranate's 
-protocol, and is intended to be a standard way for accessing or modifying
-the effective classpath. Using dynapath in your library instead of assuming
-a class loader or implementing your own protocol provides the following benefits:
+dynapath provides a protocol that is based on an extraction of
+pomegranate's protocol, and is intended to be a standard way for
+accessing or modifying the effective classpath. Using dynapath in your
+library instead of assuming a class loader or implementing your own
+protocol provides the following benefits:
 
-* Your library can work with any modifiable/readable class loader without any 
-  changes
-* Any project that has already implemented `DynamicClasspath` for whatever
-  esoteric class loader they are using will not need any other changes to
-  use your library as well
+* Your library can work with any modifiable/readable class loader
+  without any changes
+* Any project that has already implemented `DynamicClasspath` for
+  whatever esoteric class loader they are using will not need any
+  other changes to use your library as well
 
 ## Usage
 
@@ -66,6 +67,18 @@ If you need to implement `DynamicClasspath`:
              :classpath-urls (fn [cl] ...)
              :add-classpath-url (fn [cl url] ...)))
              
+## Who's using it?
+
+* [immutant](https://github.com/immutant/immutant)
+* [ritz](https://github.com/pallet/ritz)
+
+There are currently pending pull requests for:
+
+* [pomegranate](https://github.com/cemerick/pomegranate)
+* [bultitude](https://github.com/Raynes/bultitude)
+
+Are you using it? If so, add yourself to this list and send me a PR.
+
 ## License
 
 Copyright © 2012 Tobias Crawley
