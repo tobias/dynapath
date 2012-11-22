@@ -82,13 +82,13 @@ If you need to implement `DynamicClasspath`:
              
 ## Who's using it?
 
+* [bultitude](https://github.com/Raynes/bultitude)
 * [immutant](https://github.com/immutant/immutant)
 * [ritz](https://github.com/pallet/ritz)
 
 There are currently pending pull requests for:
 
 * [pomegranate](https://github.com/cemerick/pomegranate)
-* [bultitude](https://github.com/Raynes/bultitude)
 
 Are you using it? If so, add yourself to this list and send me a PR.
 
