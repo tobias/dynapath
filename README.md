@@ -33,10 +33,18 @@ protocol provides the following benefits:
 
 Add it as a dependency:
 
-    (defproject einzelfahrausweis "1.2.3"
-      :description "Yet another hard to pronounce clojure project"
-      :dependencies [[dynapath "0.2.0"]])
-    
+For a Leiningen project:
+
+    [dynapath "0.2.0"]
+
+For a maven project:
+
+    <dependency>
+      <groupId>dynapath</groupId>
+      <artifactId>dynapath</artifactId>
+      <version>0.2.0</version>
+    </dependency>
+
 If you need to access or modify the effective classpath:
 
     (require '[dynapath.util :as dp])
