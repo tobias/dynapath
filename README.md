@@ -35,35 +35,40 @@ Add it as a dependency:
 
     (defproject einzelfahrausweis "1.2.3"
       :description "Yet another hard to pronounce clojure project"
-      :dependencies [[dynapath "0.1.0"]])
+      :dependencies [[dynapath "0.2.0"]])
     
 If you need to access or modify the effective classpath:
 
-    (require '[dynapath.core :as dp])
+    (require '[dynapath.util :as dp])
     
-    (if (dp/readable-classpath? a-classloader)
-      (classpath-urls a-classloader))
+    ;; returns a seq of the urls for the classloader. Takes any classloader
+    ;; (whether it implements DynamicClasspath or not) and does the right thing
+    (dp/classpath-urls a-classloader)
       
-    (if (dp/addable-classpath? a-classloader)
-      (add-classpath-url a-classloader a-url))  
-      
-Loading the `dynapath.core` namespace will automatically implement 
+    ;; returns a seq of all the urls available from the classloader and its 
+    ;; parentage chain
+    (dp/all-classpath-urls a-classloader)
+    
+    ;; adds a url to the given classloader if it is addable
+    (dp/add-classpath-url a-classloader a-url)
+
+Loading the `dynapath.defaults` namespace will automatically implement 
 `classpath-urls` and `add-classpath-url` for `URLClassLoader` and 
 `DynamicClassLoader`.
 
 If you need to implement `DynamicClasspath`:
 
-    (require '[dynapath.core :as dp])
+    (require '[dynapath.dynamic-classpath :as dc])
     
     (extend-type AReadableButNotModfiableClassLoader
-      dp/DynamicClasspath
+      dc/DynamicClasspath
       (can-read? [_] true)
       (can-add? [_] false)
       (classpath-urls [cl] (seq ...)))
 
     (extend AReadableAndModifiableClassLoader
-      dp/DynamicClasspath
-      (assoc dp/base-readable-addable-classpath ;; implements can-read? and can-add?
+      dc/DynamicClasspath
+      (assoc dc/base-readable-addable-classpath ;; implements can-read? and can-add?
              :classpath-urls (fn [cl] ...)
              :add-classpath-url (fn [cl url] ...)))
              
