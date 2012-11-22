@@ -23,11 +23,11 @@
 
 (defn all-classpath-urls [cl]
   "Walks up the parentage chain for a ClassLoader, concatenating any URLs it retrieves."
-  (distinct
-   (mapcat
-    classpath-urls
-    (reverse
-     (take-while identity (iterate #(.getParent %) cl))))))
+  (->> (iterate #(.getParent %) cl)
+       (take-while identity)
+       reverse
+       (mapcat classpath-urls)
+       distinct))
 
 (defn add-classpath-url
   "Attempts to add a url to the given ClassLoader, returning true on success.

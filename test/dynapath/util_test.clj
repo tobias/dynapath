@@ -7,6 +7,7 @@
 (deftype Frobble [])
 
 (let [urls [(URL. "http://ham.biscuit")]
+      all-urls (conj urls (URL. "http://gravy.biscuit"))
       url-cl (URLClassLoader. (into-array urls) nil)
       basic-cl (proxy [ClassLoader] [])]
   
@@ -19,15 +20,16 @@
   (fact "all-classpath-urls should work for a parent with the urls"
     (all-classpath-urls (proxy [ClassLoader] [url-cl])) => urls)
 
-  (let [all-urls (conj urls (URL. "http://gravy.biscuit"))]
-    
-    (fact "add-classpath-url should work for an addable classpath"
-      (add-classpath-url url-cl (last all-urls)) => true
-      (classpath-urls url-cl) => all-urls)
+  (fact "all-classpath-urls should order urls properly"
+    (all-classpath-urls (URLClassLoader. (into-array [(last all-urls)]) url-cl)) => all-urls)
+  
+  (fact "add-classpath-url should work for an addable classpath"
+    (add-classpath-url url-cl (last all-urls)) => true
+    (classpath-urls url-cl) => all-urls)
 
-    (fact "add-classpath-url should work for an non-addable classpath"
-      (add-classpath-url basic-cl (last all-urls)) => nil
-      (classpath-urls basic-cl) => nil)))
+  (fact "add-classpath-url should work for an non-addable classpath"
+    (add-classpath-url basic-cl (last all-urls)) => nil
+    (classpath-urls basic-cl) => nil))
 
 (fact "addable-classpath? should work"
   (let [frobble (Frobble.)]
