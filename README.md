@@ -85,6 +85,7 @@ If you need to implement `DynamicClasspath`:
 * [bultitude](https://github.com/Raynes/bultitude)
 * [immutant](https://github.com/immutant/immutant)
 * [ritz](https://github.com/pallet/ritz)
+* [tair-repl](https://github.com/xumingming/tair-repl)
 
 There are currently pending pull requests for:
 
