@@ -22,6 +22,10 @@
 
   (fact "all-classpath-urls should order urls properly"
     (all-classpath-urls (URLClassLoader. (into-array [(last all-urls)]) url-cl)) => all-urls)
+
+  (fact "all-classpath-urls should use the baseLoader when called with a zero arity"
+    (add-classpath-url (clojure.lang.RT/baseLoader) (first urls))
+    (last (all-classpath-urls)) => (first urls))
   
   (fact "add-classpath-url should work for an addable classpath"
     (add-classpath-url url-cl (last all-urls)) => true
