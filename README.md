@@ -1,4 +1,4 @@
-# dynapath
+# dynapath [![Build Status](https://secure.travis-ci.org/tobias/dynapath.png?branch=master)](https://travis-ci.org/tobias/dynapath)
 
 dynapath provides a protocol and util functions for class loaders that
 make their effective classpaths readable and/or modifiable.
