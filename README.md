@@ -35,14 +35,14 @@ Add it as a dependency:
 
 For a Leiningen project:
 
-    [dynapath "0.2.0"]
+    [org.tcrawley/dynapath "0.2.1"]
 
 For a maven project:
 
     <dependency>
-      <groupId>dynapath</groupId>
+      <groupId>org.tcrawley</groupId>
       <artifactId>dynapath</artifactId>
-      <version>0.2.0</version>
+      <version>0.2.1</version>
     </dependency>
 
 If you need to access or modify the effective classpath:
