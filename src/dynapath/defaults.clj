@@ -20,3 +20,13 @@
     (assoc base-url-classloader
       :add-classpath-url (fn [cl url]
                            (.addURL cl url)))))
+
+(defmacro when-resolves
+  [sym & body]
+  (when (resolve sym)
+    `(do ~@body)))
+
+(when-resolves sun.misc.Launcher
+   (extend-type sun.misc.Launcher$ExtClassLoader
+   DynamicClasspath
+   (can-add? [_] false)))
