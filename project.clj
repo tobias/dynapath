@@ -1,4 +1,4 @@
-(defproject org.tcrawley/dynapath "0.3.0-SNAPSHOT"
+(defproject org.tcrawley/dynapath "0.2.2"
   :description "An abstraction for modifiable/readable class loaders."
   :url "https://github.com/tobias/dynapath"
   :license {:name "Eclipse Public License"

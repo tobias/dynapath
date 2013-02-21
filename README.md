@@ -35,14 +35,14 @@ Add it as a dependency:
 
 For a Leiningen project:
 
-    [org.tcrawley/dynapath "0.2.1"]
+    [org.tcrawley/dynapath "0.2.2"]
 
 For a maven project:
 
     <dependency>
       <groupId>org.tcrawley</groupId>
       <artifactId>dynapath</artifactId>
-      <version>0.2.1</version>
+      <version>0.2.2</version>
     </dependency>
 
 If you need to access or modify the effective classpath:
@@ -86,9 +86,6 @@ If you need to implement `DynamicClasspath`:
 * [immutant](https://github.com/immutant/immutant)
 * [ritz](https://github.com/pallet/ritz)
 * [tair-repl](https://github.com/xumingming/tair-repl)
-
-There are currently pending pull requests for:
-
 * [pomegranate](https://github.com/cemerick/pomegranate)
 
 Are you using it? If so, add yourself to this list and send me a PR.
