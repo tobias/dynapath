@@ -10,7 +10,8 @@
     `(do ~@body)))
 
 (let [base-url-classloader (assoc base-readable-addable-classpath
-                             :classpath-urls #(seq (.getURLs %)))]
+                             :classpath-urls #(seq
+                                               (.getURLs ^URLClassLoader %)))]
   (extend URLClassLoader
     DynamicClasspath
     (assoc base-url-classloader
@@ -23,7 +24,7 @@
   (extend DynamicClassLoader
     DynamicClasspath
     (assoc base-url-classloader
-      :add-classpath-url (fn [cl url]
+      :add-classpath-url (fn [^DynamicClassLoader cl url]
                            (.addURL cl url))))
 
   (when-resolves sun.misc.Launcher

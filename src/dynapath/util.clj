@@ -27,11 +27,11 @@ If no ClassLoader is provided, RT/baseLoader is assumed."
   ([]
      (all-classpath-urls (clojure.lang.RT/baseLoader)))
   ([cl]
-      (->> (iterate #(.getParent %) cl)
-           (take-while identity)
-           reverse
-           (mapcat classpath-urls)
-           distinct)))
+     (->> (iterate #(.getParent ^ClassLoader %) cl)
+          (take-while identity)
+          reverse
+          (mapcat classpath-urls)
+          distinct)))
 
 (defn add-classpath-url
   "Attempts to add a url to the given ClassLoader, returning true on success.
