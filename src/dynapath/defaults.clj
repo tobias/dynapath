@@ -6,7 +6,9 @@
 
 (defmacro when-resolves
   [sym & body]
-  (when (resolve sym)
+  (when (try
+          (resolve sym)
+          (catch Exception _))
     `(do ~@body)))
 
 (let [base-url-classloader (assoc base-readable-addable-classpath
@@ -27,6 +29,8 @@
       :add-classpath-url (fn [^DynamicClassLoader cl url]
                            (.addURL cl url))))
 
+  ;; on < java 9, the boot classloader is a URLClassLoader, but
+  ;; modifying it can have dire consequences
   (when-resolves sun.misc.Launcher
    (extend sun.misc.Launcher$ExtClassLoader
      DynamicClasspath
