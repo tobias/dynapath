@@ -17,6 +17,4 @@
                               [:timezone "-5"]]]
 
   :profiles {:dev
-             {:dependencies [[org.clojure/clojure "1.4.0"]
-                             [lein-midje          "2.0.1"]
-                             [midje               "1.4.0"]]}})
+             {:dependencies [[org.clojure/clojure "1.4.0"]]}})

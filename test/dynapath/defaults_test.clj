@@ -1,5 +1,5 @@
 (ns dynapath.defaults-test
-  (:use midje.sweet
+  (:use clojure.test
         dynapath.defaults
         dynapath.dynamic-classpath)
   (:import (java.net URL URLClassLoader)
@@ -10,21 +10,21 @@
 (let [url-cl (URLClassLoader. (make-array URL 0) nil)
       dyn-cl (DynamicClassLoader.)]
   
-  (fact "DynamicClassLoader should be extended"
-    (satisfies? DynamicClasspath dyn-cl) => true)
+  (deftest DynamicClassLoader-should-be-extended
+    (is (satisfies? DynamicClasspath dyn-cl)))
 
-  (fact "URLClassLoader should be extended"
-    (satisfies? DynamicClasspath url-cl) => true)
+  (deftest URLClassLoader-should-be-extended
+    (is (satisfies? DynamicClasspath url-cl)))
 
-  (fact "add-classpath-url/get-classpath-urls should work for a URLClassLoader"
+  (deftest add-classpath-url-get-classpath-urls-should-work-for-a-URLClassLoader
     (let [url (URL. "http://ham.biscuit")]
       (add-classpath-url url-cl url)
-      (classpath-urls url-cl) => [url]))
+      (is (= [url] (classpath-urls url-cl)))))
 
-  (fact "add-classpath-url/get-classpath-urls should work for a DynamicClassLoader"
+  (deftest add-classpath-url-get-classpath-urls-should-work-for-a-DynamicClassLoader
     (let [url (URL. "http://ham.biscuit")]
       (add-classpath-url dyn-cl url)
-      (classpath-urls dyn-cl) => [url])))
+      (is (= [url] (classpath-urls dyn-cl))))))
 
 
 
