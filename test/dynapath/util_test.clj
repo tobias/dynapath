@@ -4,10 +4,9 @@
         [dynapath.dynamic-classpath :only [DynamicClasspath]])
   (:import (java.net URL URLClassLoader)))
 
-(deftype Frobble [])
-
 (def ^:dynamic *url-cl*)
 (def ^:dynamic *basic-cl*)
+(def ^:dynamic *type*)
 
 (let [urls [(URL. "http://ham.biscuit")]
       all-urls (conj urls (URL. "http://gravy.biscuit"))]
@@ -15,7 +14,10 @@
   (use-fixtures :each
     (fn [f]
       (binding [*url-cl* (URLClassLoader. (into-array urls) nil)
-                *basic-cl* (proxy [ClassLoader] [])]
+                *basic-cl* (proxy [ClassLoader] [])
+                *type* (let [s (gensym "Foo")]
+                         (eval `(deftype ~s []))
+                         s)]
         (f))))
   
   (deftest classpath-urls-should-work-for-a-readable-classloader
@@ -43,25 +45,30 @@
     (is (nil? (classpath-urls *basic-cl*))))
 
   (deftest addable-classpath?-should-work
-    (let [frobble (Frobble.)]
-      (is (not (addable-classpath? frobble)))
-      (extend-type Frobble
-        DynamicClasspath
-        (can-add? [_] true))
-      (is (addable-classpath? frobble))
-      (extend-type Frobble
-        DynamicClasspath
-        (can-add? [_] false))
-      (is (not (addable-classpath? frobble)))))
+    (let [obj (eval `(new ~*type*))]
+      (is (not (addable-classpath? obj)))
+      (eval
+        `(extend-type ~*type*
+           DynamicClasspath
+           (can-add? [~'_] true)))
+      (is (addable-classpath? obj))
+      (eval
+        `(extend-type ~*type*
+           DynamicClasspath
+           (can-add? [~'_] false)))
+      (is (not (addable-classpath? obj)))))
 
   (deftest readable-classpath?-should-work
-    (let [frobble (Frobble.)]
-      (extend-type Frobble
-        DynamicClasspath
-        (can-read? [_] false))
-      (is (not (readable-classpath? frobble)))
-      (extend-type Frobble
-        DynamicClasspath
-        (can-read? [_] true))
-      (is (readable-classpath? frobble)))))
+    (let [obj (eval `(new ~*type*))]
+      (is (not (readable-classpath? obj)))
+      (eval
+        `(extend-type ~*type*
+           DynamicClasspath
+           (can-read? [~'_] true)))
+      (is (readable-classpath? obj))
+      (eval
+        `(extend-type ~*type*
+           DynamicClasspath
+           (can-read? [~'_] false)))
+      (is (not (readable-classpath? obj))))))
 
