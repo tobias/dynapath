@@ -33,16 +33,16 @@ protocol provides the following benefits:
 
 Add it as a dependency:
 
-For a Leiningen project:
+For a Leiningen/Boot project:
 
-    [org.tcrawley/dynapath "0.2.3"]
+    [org.tcrawley/dynapath "0.2.4"]
 
 For a maven project:
 
     <dependency>
       <groupId>org.tcrawley</groupId>
       <artifactId>dynapath</artifactId>
-      <version>0.2.3</version>
+      <version>0.2.4</version>
     </dependency>
 
 If you need to access or modify the effective classpath:
@@ -68,7 +68,7 @@ If you need to implement `DynamicClasspath`:
 
     (require '[dynapath.dynamic-classpath :as dc])
     
-    (extend-type AReadableButNotModfiableClassLoader
+    (extend-type AReadableButNotModifiableClassLoader
       dc/DynamicClasspath
       (can-read? [_] true)
       (can-add? [_] false)
@@ -92,6 +92,6 @@ Are you using it? If so, add yourself to this list and send me a PR.
 
 ## License
 
-Copyright © 2012 Tobias Crawley
+Copyright © 2012-2016 Tobias Crawley
 
 Distributed under the Eclipse Public License.
