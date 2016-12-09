@@ -86,7 +86,7 @@ If you are using Java 9, you'll have to use dynapath 0.2.5. And under
 Java 9, `URLClassLoader` instances won't be modifiable via dynapath by
 default, since it uses reflection to access the protected method
 `addURL`, and security changes prevent calling `.setAccessible` on
-it. You can work around that by passing `----add-opens
+it. You can work around that by passing `--add-opens
 java.base/java.net=ALL-UNNAMED` to `java`.
 
 If you are building dynapath under Java 9, you'll have to provide that
