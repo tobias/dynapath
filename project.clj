@@ -29,4 +29,4 @@
              :1.8
              {:dependencies [[org.clojure/clojure "1.8.0"]]}
              :1.9
-             {:dependencies [[org.clojure/clojure "1.9.0-alpha3"]]}})
+             {:dependencies [[org.clojure/clojure "1.9.0-alpha14"]]}})
