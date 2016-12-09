@@ -35,7 +35,7 @@ Add it as a dependency:
 
 For a Leiningen/Boot project:
 
-    [org.tcrawley/dynapath "0.2.4"]
+    [org.tcrawley/dynapath "0.2.5"]
 
 For a maven project:
 
@@ -79,7 +79,23 @@ If you need to implement `DynamicClasspath`:
       (assoc dc/base-readable-addable-classpath ;; implements can-read? and can-add?
              :classpath-urls (fn [cl] ...)
              :add-classpath-url (fn [cl url] ...)))
-             
+
+## Note on Java 9
+
+If you are using Java 9, you'll have to use dynapath 0.2.5. And under
+Java 9, `URLClassLoader` instances won't be modifiable via dynapath by
+default, since it uses reflection to access the protected method
+`addURL`, and security changes prevent calling `.setAccessible` on
+it. You can work around that by passing `----add-opens
+java.base/java.net=ALL-UNNAMED` to `java`.
+
+If you are building dynapath under Java 9, you'll have to provide that
+options for the tests to pass:
+
+```
+JVM_OPTS="--add-opens java.base/java.net=ALL-UNNAMED" lein test-all
+```
+
 ## Who's using it?
 
 * [bultitude](https://github.com/Raynes/bultitude)
@@ -87,6 +103,7 @@ If you need to implement `DynamicClasspath`:
 * [ritz](https://github.com/pallet/ritz)
 * [tair-repl](https://github.com/xumingming/tair-repl)
 * [pomegranate](https://github.com/cemerick/pomegranate)
+* [boot](http://boot-clj.com/)
 
 Are you using it? If so, add yourself to this list and send me a PR.
 
