@@ -16,14 +16,18 @@
     :classpath-urls #(seq (.getURLs ^URLClassLoader %))))
 
 (when-not (extends? DynamicClasspath URLClassLoader)
-  (extend URLClassLoader
-    DynamicClasspath
-    (assoc base-url-classloader
-      :add-classpath-url (fn [cl url]
-                           (-> URLClassLoader
-                               (.getDeclaredMethod "addURL" (into-array Class [URL]))
-                               (doto (.setAccessible true))
-                               (.invoke cl (into-array URL [url]))))))
+  (let [addURL (try
+                 (-> URLClassLoader
+                   (.getDeclaredMethod "addURL" (into-array Class [URL]))
+                   (doto (.setAccessible true)))
+                 (catch Exception _))]
+    (extend URLClassLoader
+      DynamicClasspath
+      (assoc base-url-classloader
+        :can-add? (fn [_] (boolean addURL))
+        :add-classpath-url (fn [cl url]
+                             (when addURL
+                               (.invoke addURL cl (into-array URL [url])))))))
 
   (extend DynamicClassLoader
     DynamicClasspath
