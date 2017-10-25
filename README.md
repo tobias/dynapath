@@ -61,8 +61,8 @@ If you need to access or modify the effective classpath:
     (dp/add-classpath-url a-classloader a-url)
 
 Loading the `dynapath.defaults` namespace will automatically implement 
-`classpath-urls` and `add-classpath-url` for `URLClassLoader` and 
-`DynamicClassLoader`.
+`classpath-urls` and `add-classpath-url` for `clojure.lang.DynamicClassLoader` and
+`classpath-urls` for `java.net.URLClassLoader`.
 
 If you need to implement `DynamicClasspath`:
 
@@ -80,21 +80,17 @@ If you need to implement `DynamicClasspath`:
              :classpath-urls (fn [cl] ...)
              :add-classpath-url (fn [cl url] ...)))
 
-## Note on Java 9
+## Note on URLClassLoader
 
-If you are using Java 9, you'll have to use dynapath 0.2.5. And under
-Java 9, `URLClassLoader` instances won't be modifiable via dynapath by
-default, since it uses reflection to access the protected method
-`addURL`, and security changes prevent calling `.setAccessible` on
-it. You can work around that by passing `--add-opens
-java.base/java.net=ALL-UNNAMED` to `java`.
-
-If you are building dynapath under Java 9, you'll have to provide that
-options for the tests to pass:
-
-```
-JVM_OPTS="--add-opens java.base/java.net=ALL-UNNAMED" lein test-all
-```
+Prior versions of dynapath implemented `add-classpath-url` for
+`java.net.URLClassLoader`. Doing so required reflective access to its
+protected `addURL` method, which would result in a warning printed to
+stdout under Java 9. To prevent that, that implementation has been
+removed, and libraries that were relying on that behavior should
+instead ensure they have a modifiable classloader as high in the
+classloader tree as they can control. For example,
+[boot implements its own classloader](https://github.com/boot-clj/boot/commit/a046a497a8bb7f3d1e7aa8d4db4a81c51beaef7d)
+to do this.
 
 ## Who's using it?
 
@@ -109,6 +105,6 @@ Are you using it? If so, add yourself to this list and send me a PR.
 
 ## License
 
-Copyright © 2012-2016 Tobias Crawley
+Copyright © 2012-2017 Tobias Crawley
 
 Distributed under the Eclipse Public License.

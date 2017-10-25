@@ -40,6 +40,3 @@ If the ClassLoader is not addable, does nothing and returns nil."
   (when (addable-classpath? cl)
     (dc/add-classpath-url cl url)
     true))
-
-
-

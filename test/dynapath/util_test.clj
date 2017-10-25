@@ -2,8 +2,10 @@
   (:use clojure.test
         dynapath.util
         [dynapath.dynamic-classpath :only [DynamicClasspath]])
-  (:import (java.net URL URLClassLoader)))
+  (:import clojure.lang.DynamicClassLoader
+           (java.net URL URLClassLoader)))
 
+(def ^:dynamic *dynamic-cl*)
 (def ^:dynamic *url-cl*)
 (def ^:dynamic *basic-cl*)
 (def ^:dynamic *type*)
@@ -14,6 +16,7 @@
   (use-fixtures :each
     (fn [f]
       (binding [*url-cl* (URLClassLoader. (into-array urls) nil)
+                *dynamic-cl* (DynamicClassLoader.)
                 *basic-cl* (proxy [ClassLoader] [])
                 *type* (let [s (gensym "Foo")]
                          (eval `(deftype ~s []))
@@ -37,10 +40,10 @@
     (= (first urls) (last (all-classpath-urls))))
   
   (deftest add-classpath-url-should-work-for-an-addable-classpath
-    (is (add-classpath-url *url-cl* (last all-urls)))
-    (is (= all-urls (classpath-urls *url-cl*))))
+    (is (add-classpath-url *dynamic-cl* (last all-urls)))
+    (is (= [(last all-urls)] (classpath-urls *dynamic-cl*))))
 
-  (deftest add-classpath-url-should-work-for-an-non-addable-classpath
+  (deftest add-classpath-url-should-work-for-a-non-addable-classpath
     (is (nil? (add-classpath-url *basic-cl* (last all-urls))))
     (is (nil? (classpath-urls *basic-cl*))))
 
