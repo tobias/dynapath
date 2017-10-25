@@ -1,4 +1,4 @@
-(defproject org.tcrawley/dynapath "0.2.6-SNAPSHOT"
+(defproject org.tcrawley/dynapath "1.0.0-SNAPSHOT"
   :description "An abstraction for modifiable/readable class loaders."
   :url "https://github.com/tobias/dynapath"
   :license {:name "Eclipse Public License"
@@ -29,4 +29,4 @@
              :1.8
              {:dependencies [[org.clojure/clojure "1.8.0"]]}
              :1.9
-             {:dependencies [[org.clojure/clojure "1.9.0-alpha14"]]}})
+             {:dependencies [[org.clojure/clojure "1.9.0-beta2"]]}})

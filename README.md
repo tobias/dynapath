@@ -35,7 +35,7 @@ Add it as a dependency:
 
 For a Leiningen/Boot project:
 
-    [org.tcrawley/dynapath "0.2.5"]
+    [org.tcrawley/dynapath "1.0.0"]
 
 For a maven project:
 
