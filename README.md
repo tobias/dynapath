@@ -100,6 +100,7 @@ to do this.
 * [tair-repl](https://github.com/xumingming/tair-repl)
 * [pomegranate](https://github.com/cemerick/pomegranate)
 * [boot](http://boot-clj.com/)
+* [metabase](https://github.com/metabase/metabase)
 
 Are you using it? If so, add yourself to this list and send me a PR.
 
