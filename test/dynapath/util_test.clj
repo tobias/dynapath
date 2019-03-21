@@ -37,8 +37,11 @@
 
   (deftest all-classpath-urls-should-use-the-baseLoader-when-called-with-a-zero-arity
     (add-classpath-url (clojure.lang.RT/baseLoader) (first urls))
-    (= (first urls) (last (all-classpath-urls))))
-  
+    (is (= (first urls) (last (all-classpath-urls)))))
+
+  (deftest all-classpath-urls-always-returns-something-when-called-with-a-zero-arity
+    (is (seq (all-classpath-urls))))
+
   (deftest add-classpath-url-should-work-for-an-addable-classpath
     (is (add-classpath-url *dynamic-cl* (last all-urls)))
     (is (= [(last all-urls)] (classpath-urls *dynamic-cl*))))
