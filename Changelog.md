@@ -1,3 +1,9 @@
+# 1.1.0 - 2019-11-25
+
+* Fall back to parsing the `java.class.path` sysprop if the base
+  loader doesn't have a dynapath implementation. This allows for some
+  classpath value to be returned when on Java 9+.
+  
 # 1.0.0 - 2017-10-25
 
 * BREAKING - Don't allow URLClassLoader to be modified. See the README

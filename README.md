@@ -1,4 +1,4 @@
-# dynapath [![Build Status](https://secure.travis-ci.org/tobias/dynapath.png?branch=master)](https://travis-ci.org/tobias/dynapath)
+'# dynapath [![Build Status](https://secure.travis-ci.org/tobias/dynapath.png?branch=master)](https://travis-ci.org/tobias/dynapath)
 
 dynapath provides a protocol and util functions for class loaders that
 make their effective classpaths readable and/or modifiable.
@@ -35,14 +35,14 @@ Add it as a dependency:
 
 For a Leiningen/Boot project:
 
-    [org.tcrawley/dynapath "1.0.0"]
+    [org.tcrawley/dynapath "1.1.0"]
 
 For a maven project:
 
     <dependency>
       <groupId>org.tcrawley</groupId>
       <artifactId>dynapath</artifactId>
-      <version>0.2.4</version>
+      <version>1.1.0</version>
     </dependency>
 
 If you need to access or modify the effective classpath:
